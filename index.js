@@ -68,7 +68,7 @@ async function getSignedUrl() {
 }
 
 // WebSocket route for handling media streams
-fastify.register(async fastifyInstance => {
+fastify.register(async (fastifyInstance) => {
   fastifyInstance.get("/media-stream", { websocket: true }, (ws, req) => {
     console.info("[Server] Twilio connected to media stream");
 
@@ -91,7 +91,7 @@ fastify.register(async fastifyInstance => {
           console.log("[ElevenLabs] Connected to Conversational AI");
         });
 
-        elevenLabsWs.on("message", data => {
+        elevenLabsWs.on("message", (data) => {
           try {
             const message = JSON.parse(data);
 
@@ -172,7 +172,7 @@ fastify.register(async fastifyInstance => {
           }
         });
 
-        elevenLabsWs.on("error", error => {
+        elevenLabsWs.on("error", (error) => {
           console.error("[ElevenLabs] WebSocket error:", error);
         });
 
@@ -188,7 +188,7 @@ fastify.register(async fastifyInstance => {
     setupElevenLabs();
 
     // Handle messages from Twilio
-    ws.on("message", message => {
+    ws.on("message", (message) => {
       try {
         const msg = JSON.parse(message);
         if (msg.event !== "media") {
@@ -242,7 +242,7 @@ fastify.register(async fastifyInstance => {
 });
 
 // Start the Fastify server
-fastify.listen({ port: PORT }, err => {
+fastify.listen({ port: PORT, host: "0.0.0.0" }, (err) => {
   if (err) {
     console.error("Error starting server:", err);
     process.exit(1);
