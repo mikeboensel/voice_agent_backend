@@ -250,6 +250,6 @@ fastify.listen({ port: PORT, host: "0.0.0.0" }, (err) => {
   console.log(`[Server] Listening on port ${PORT}`);
 });
 // Enable CORS for all origins
-await fastify.register(import('@fastify/cors'), { 
-  origin: true
+await fastify.register(import("@fastify/cors"), {
+  origin: false,
 });
